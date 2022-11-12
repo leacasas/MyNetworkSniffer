@@ -1,5 +1,6 @@
 ﻿using MyNetworkSniffer.Domain;
 using System.Net;
+using System.Net.Sockets;
 
 namespace MyNetworkSniffer
 {
@@ -28,6 +29,9 @@ namespace MyNetworkSniffer
                 {
                     args.Status = PingStatus.Completed;
                     args.IP = hostNameOrAddress;
+                    args.HostName = ipHostEntry.HostName ?? "";
+                    args.IPV6Address = ipHostEntry.AddressList.Where(x => x.AddressFamily == AddressFamily.InterNetworkV6).Select(x => x.ToString());
+                    args.MACAddress = IPHelper.GetMACAddress(hostNameOrAddress);
 
                     eventHandler?.Invoke(this, args);
                 }

@@ -2,11 +2,17 @@
 
 namespace MyNetworkSniffer;
 
-public class PingDeviceCompletedEventArgs : EventArgs
+internal class PingDeviceCompletedEventArgs : EventArgs
 {
-    public PingStatus Status { get; set; }
+    internal PingStatus Status { get; set; }
 
-    public string IP { get; set; }
+    internal string IP { get; set; }
 
-    public string Message { get; set; }
+    internal IEnumerable<string> IPV6Address { get; set; }
+
+    internal string MACAddress { get; set; }
+
+    internal string HostName { get; set; }
+
+    internal string Message { get; set; }
 }

@@ -1,6 +1,5 @@
 using MyNetworkSniffer.Domain;
 using System.ComponentModel;
-using System.Net;
 using System.Net.Sockets;
 using System.Text;
 
@@ -333,38 +332,34 @@ public partial class NetworkSniffer : Form
 
         if (eventArgs.IP != null)
         {
-            string ip = eventArgs.IP;
-            string host = Dns.GetHostEntry(ip)?.HostName ?? "";
-            IEnumerable<string> ipV6Addresses = IPHelper.GetIPAddresses(AddressFamily.InterNetworkV6);
-            string mac = IPHelper.GetMACAddress(ip);
-
             if (eventArgs.Status == PingStatus.Completed)
             {
                 try
                 {
-                    ActiveDevice activeDevice = new(ip, ipV6Addresses, mac, host);
+                    ActiveDevice activeDevice = new(eventArgs.IP, eventArgs.IPV6Address, eventArgs.MACAddress, eventArgs.HostName);
 
                     SafeInvoke(FoundIPTreeView, () =>
                     {
-                        FoundIPTreeView.Nodes.Add(activeDevice.HostAndIPV4, activeDevice.HostName, 0);
+                        FoundIPTreeView.Nodes.Add(activeDevice.HostAndIPV4, $"Host name: {activeDevice.HostName}", 9);
                         FoundIPTreeView.Nodes[activeDevice.HostAndIPV4].Tag = activeDevice;
 
-                        FoundIPTreeView.Nodes[activeDevice.HostAndIPV4].Nodes.Add(ip, ip, 5);
-                        FoundIPTreeView.Nodes[activeDevice.HostAndIPV4].Nodes[ip].Tag = activeDevice;
+                        FoundIPTreeView.Nodes[activeDevice.HostAndIPV4].Nodes.Add(eventArgs.IP, $"ip: {eventArgs.IP}", 6);
+                        FoundIPTreeView.Nodes[activeDevice.HostAndIPV4].Nodes[eventArgs.IP].Tag = activeDevice;
 
-                        FoundIPTreeView.Nodes[activeDevice.HostAndIPV4].Nodes[ip].Nodes.Add(activeDevice.HostName ?? ip, activeDevice.HostName ?? ip, 8);
-                        FoundIPTreeView.Nodes[activeDevice.HostAndIPV4].Nodes[ip].Nodes[activeDevice.HostName ?? ip].Tag = activeDevice;
+                        string device = activeDevice.HostName ?? eventArgs.IP;
 
-                        FoundIPTreeView.Nodes[activeDevice.HostAndIPV4].Nodes[ip].Nodes.Add(activeDevice.MACAddress, activeDevice.MACAddress, 0);
-                        FoundIPTreeView.Nodes[activeDevice.HostAndIPV4].Nodes[ip].Nodes[activeDevice.MACAddress].Tag = activeDevice;
+                        FoundIPTreeView.Nodes[activeDevice.HostAndIPV4].Nodes[eventArgs.IP].Nodes.Add(device, $"{device}", 1);
+                        FoundIPTreeView.Nodes[activeDevice.HostAndIPV4].Nodes[eventArgs.IP].Nodes[device].Tag = activeDevice;
+
+                        FoundIPTreeView.Nodes[activeDevice.HostAndIPV4].Nodes[eventArgs.IP].Nodes.Add(activeDevice.MACAddress, $"MAC: {activeDevice.MACAddress}", 12);
+                        FoundIPTreeView.Nodes[activeDevice.HostAndIPV4].Nodes[eventArgs.IP].Nodes[activeDevice.MACAddress].Tag = activeDevice;
 
                         if (activeDevice.IPV6Address != null)
                         {
                             foreach (string ipv6 in activeDevice.IPV6Address)
                             {
-                                FoundIPTreeView.Nodes[activeDevice.HostAndIPV4].Nodes[ip].Nodes.Add(ipv6, ipv6, 3);
-                                FoundIPTreeView.Nodes[activeDevice.HostAndIPV4].Nodes[ip].Nodes[ipv6].Tag = activeDevice;
-
+                                FoundIPTreeView.Nodes[activeDevice.HostAndIPV4].Nodes[eventArgs.IP].Nodes.Add(ipv6, ipv6, 7);
+                                FoundIPTreeView.Nodes[activeDevice.HostAndIPV4].Nodes[eventArgs.IP].Nodes[ipv6].Tag = activeDevice;
                             }
                         }
                     });

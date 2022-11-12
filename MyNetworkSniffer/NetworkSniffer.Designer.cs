@@ -471,15 +471,19 @@ partial class NetworkSniffer
             this.imageList1.ColorDepth = System.Windows.Forms.ColorDepth.Depth8Bit;
             this.imageList1.ImageStream = ((System.Windows.Forms.ImageListStreamer)(resources.GetObject("imageList1.ImageStream")));
             this.imageList1.TransparentColor = System.Drawing.Color.Transparent;
-            this.imageList1.Images.SetKeyName(0, "cellphone-link.png");
-            this.imageList1.Images.SetKeyName(1, "ip.png");
-            this.imageList1.Images.SetKeyName(2, "ip-network.png");
-            this.imageList1.Images.SetKeyName(3, "ip-network-outline.png");
-            this.imageList1.Images.SetKeyName(4, "ip-outline.png");
-            this.imageList1.Images.SetKeyName(5, "lan.png");
-            this.imageList1.Images.SetKeyName(6, "lan-connect.png");
-            this.imageList1.Images.SetKeyName(7, "laptop.png");
-            this.imageList1.Images.SetKeyName(8, "router-network.png");
+            this.imageList1.Images.SetKeyName(0, "desktop-classic.png");
+            this.imageList1.Images.SetKeyName(1, "devices.png");
+            this.imageList1.Images.SetKeyName(2, "cellphone-link.png");
+            this.imageList1.Images.SetKeyName(3, "desktop-classic.png");
+            this.imageList1.Images.SetKeyName(4, "devices.png");
+            this.imageList1.Images.SetKeyName(5, "ip.png");
+            this.imageList1.Images.SetKeyName(6, "ip-network.png");
+            this.imageList1.Images.SetKeyName(7, "ip-network-outline.png");
+            this.imageList1.Images.SetKeyName(8, "ip-outline.png");
+            this.imageList1.Images.SetKeyName(9, "lan.png");
+            this.imageList1.Images.SetKeyName(10, "lan-connect.png");
+            this.imageList1.Images.SetKeyName(11, "laptop.png");
+            this.imageList1.Images.SetKeyName(12, "router-network.png");
             // 
             // LogGroupBox
             // 
