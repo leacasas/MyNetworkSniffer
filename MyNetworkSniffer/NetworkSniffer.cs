@@ -152,6 +152,8 @@ public partial class NetworkSniffer : Form
 
     private void StartButton_Click(object sender, EventArgs e)
     {
+        var a = IPHelper.GetNetworkParameters();//for testing, move to own ctrl
+
         if (PingerBackgroundWorker.IsBusy)
             return;
 
