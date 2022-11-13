@@ -60,6 +60,8 @@ partial class NetworkSniffer
             this.NetworkGroupBox = new System.Windows.Forms.GroupBox();
             this.MaskTextLabel = new System.Windows.Forms.Label();
             this.ProcessGroupBox = new System.Windows.Forms.GroupBox();
+            this.EnableVerboseLlabel = new System.Windows.Forms.Label();
+            this.EnableVerboseButton = new System.Windows.Forms.Button();
             this.AutoTimeoutLabel = new System.Windows.Forms.Label();
             this.AutoTimeoutButton = new System.Windows.Forms.Button();
             this.StartButton = new System.Windows.Forms.Button();
@@ -73,12 +75,24 @@ partial class NetworkSniffer
             this.LogTextBox = new System.Windows.Forms.TextBox();
             this.progressBar = new System.Windows.Forms.ProgressBar();
             this.PingerBackgroundWorker = new System.ComponentModel.BackgroundWorker();
+            this.ParametersGroupBox = new System.Windows.Forms.GroupBox();
+            this.DNSServersListView = new System.Windows.Forms.ListView();
+            this.DNSServersLabel = new System.Windows.Forms.Label();
+            this.ScopeNameLabel = new System.Windows.Forms.Label();
+            this.ScopeNameTextBox = new System.Windows.Forms.TextBox();
+            this.DomainNameLabel = new System.Windows.Forms.Label();
+            this.DomainNameTextBox = new System.Windows.Forms.TextBox();
+            this.NodeTypeLabel = new System.Windows.Forms.Label();
+            this.NodeTypeTextBox = new System.Windows.Forms.TextBox();
+            this.HostNameLabel = new System.Windows.Forms.Label();
+            this.HostNameTextBox = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.MaskBitsTrackBar)).BeginInit();
             this.NetworkGroupBox.SuspendLayout();
             this.ProcessGroupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.TimeoutNumericUpDown)).BeginInit();
             this.panel1.SuspendLayout();
             this.LogGroupBox.SuspendLayout();
+            this.ParametersGroupBox.SuspendLayout();
             this.SuspendLayout();
             // 
             // IPcomboBox
@@ -94,7 +108,7 @@ partial class NetworkSniffer
             // 
             this.MaskBitsTrackBar.Enabled = false;
             this.MaskBitsTrackBar.LargeChange = 1;
-            this.MaskBitsTrackBar.Location = new System.Drawing.Point(23, 198);
+            this.MaskBitsTrackBar.Location = new System.Drawing.Point(23, 194);
             this.MaskBitsTrackBar.Maximum = 32;
             this.MaskBitsTrackBar.Name = "MaskBitsTrackBar";
             this.MaskBitsTrackBar.Size = new System.Drawing.Size(604, 45);
@@ -107,7 +121,7 @@ partial class NetworkSniffer
             this.IPClassTextBox.BackColor = System.Drawing.SystemColors.Control;
             this.IPClassTextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.IPClassTextBox.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.IPClassTextBox.Location = new System.Drawing.Point(144, 344);
+            this.IPClassTextBox.Location = new System.Drawing.Point(144, 332);
             this.IPClassTextBox.Name = "IPClassTextBox";
             this.IPClassTextBox.ReadOnly = true;
             this.IPClassTextBox.Size = new System.Drawing.Size(188, 27);
@@ -156,7 +170,7 @@ partial class NetworkSniffer
             // 
             this.MaskBitsRichTextBox.BackColor = System.Drawing.SystemColors.Control;
             this.MaskBitsRichTextBox.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.MaskBitsRichTextBox.Location = new System.Drawing.Point(42, 142);
+            this.MaskBitsRichTextBox.Location = new System.Drawing.Point(42, 135);
             this.MaskBitsRichTextBox.Name = "MaskBitsRichTextBox";
             this.MaskBitsRichTextBox.ReadOnly = true;
             this.MaskBitsRichTextBox.Size = new System.Drawing.Size(588, 58);
@@ -167,17 +181,17 @@ partial class NetworkSniffer
             // MaskBitsSuffixLabel
             // 
             this.MaskBitsSuffixLabel.AutoSize = true;
-            this.MaskBitsSuffixLabel.Font = new System.Drawing.Font("Segoe UI", 17F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.MaskBitsSuffixLabel.Location = new System.Drawing.Point(633, 198);
+            this.MaskBitsSuffixLabel.Font = new System.Drawing.Font("Segoe UI", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.MaskBitsSuffixLabel.Location = new System.Drawing.Point(621, 196);
             this.MaskBitsSuffixLabel.Name = "MaskBitsSuffixLabel";
-            this.MaskBitsSuffixLabel.Size = new System.Drawing.Size(43, 31);
+            this.MaskBitsSuffixLabel.Size = new System.Drawing.Size(39, 28);
             this.MaskBitsSuffixLabel.TabIndex = 8;
             this.MaskBitsSuffixLabel.Text = "/ 0";
             // 
             // SubnetMaskLabel
             // 
             this.SubnetMaskLabel.AutoSize = true;
-            this.SubnetMaskLabel.Location = new System.Drawing.Point(63, 263);
+            this.SubnetMaskLabel.Location = new System.Drawing.Point(63, 251);
             this.SubnetMaskLabel.Name = "SubnetMaskLabel";
             this.SubnetMaskLabel.Size = new System.Drawing.Size(78, 15);
             this.SubnetMaskLabel.TabIndex = 9;
@@ -186,7 +200,7 @@ partial class NetworkSniffer
             // MaxHostsCountLabel
             // 
             this.MaxHostsCountLabel.AutoSize = true;
-            this.MaxHostsCountLabel.Location = new System.Drawing.Point(43, 292);
+            this.MaxHostsCountLabel.Location = new System.Drawing.Point(43, 280);
             this.MaxHostsCountLabel.Name = "MaxHostsCountLabel";
             this.MaxHostsCountLabel.Size = new System.Drawing.Size(98, 15);
             this.MaxHostsCountLabel.TabIndex = 10;
@@ -195,7 +209,7 @@ partial class NetworkSniffer
             // MaxIDCountLabel
             // 
             this.MaxIDCountLabel.AutoSize = true;
-            this.MaxIDCountLabel.Location = new System.Drawing.Point(60, 321);
+            this.MaxIDCountLabel.Location = new System.Drawing.Point(60, 309);
             this.MaxIDCountLabel.Name = "MaxIDCountLabel";
             this.MaxIDCountLabel.Size = new System.Drawing.Size(81, 15);
             this.MaxIDCountLabel.TabIndex = 11;
@@ -204,7 +218,7 @@ partial class NetworkSniffer
             // IPClassLabel
             // 
             this.IPClassLabel.AutoSize = true;
-            this.IPClassLabel.Location = new System.Drawing.Point(91, 350);
+            this.IPClassLabel.Location = new System.Drawing.Point(91, 338);
             this.IPClassLabel.Name = "IPClassLabel";
             this.IPClassLabel.Size = new System.Drawing.Size(50, 15);
             this.IPClassLabel.TabIndex = 12;
@@ -213,7 +227,7 @@ partial class NetworkSniffer
             // NetIDLabel
             // 
             this.NetIDLabel.AutoSize = true;
-            this.NetIDLabel.Location = new System.Drawing.Point(394, 263);
+            this.NetIDLabel.Location = new System.Drawing.Point(394, 251);
             this.NetIDLabel.Name = "NetIDLabel";
             this.NetIDLabel.Size = new System.Drawing.Size(43, 15);
             this.NetIDLabel.TabIndex = 13;
@@ -222,7 +236,7 @@ partial class NetworkSniffer
             // FirstIPLabel
             // 
             this.FirstIPLabel.AutoSize = true;
-            this.FirstIPLabel.Location = new System.Drawing.Point(392, 292);
+            this.FirstIPLabel.Location = new System.Drawing.Point(392, 280);
             this.FirstIPLabel.Name = "FirstIPLabel";
             this.FirstIPLabel.Size = new System.Drawing.Size(45, 15);
             this.FirstIPLabel.TabIndex = 14;
@@ -233,7 +247,7 @@ partial class NetworkSniffer
             this.MaxIDTextBox.BackColor = System.Drawing.SystemColors.Control;
             this.MaxIDTextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.MaxIDTextBox.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.MaxIDTextBox.Location = new System.Drawing.Point(144, 315);
+            this.MaxIDTextBox.Location = new System.Drawing.Point(144, 303);
             this.MaxIDTextBox.Name = "MaxIDTextBox";
             this.MaxIDTextBox.ReadOnly = true;
             this.MaxIDTextBox.Size = new System.Drawing.Size(188, 27);
@@ -244,7 +258,7 @@ partial class NetworkSniffer
             this.MaxHostsCountTextBox.BackColor = System.Drawing.SystemColors.Control;
             this.MaxHostsCountTextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.MaxHostsCountTextBox.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.MaxHostsCountTextBox.Location = new System.Drawing.Point(144, 286);
+            this.MaxHostsCountTextBox.Location = new System.Drawing.Point(144, 274);
             this.MaxHostsCountTextBox.Name = "MaxHostsCountTextBox";
             this.MaxHostsCountTextBox.ReadOnly = true;
             this.MaxHostsCountTextBox.Size = new System.Drawing.Size(188, 27);
@@ -255,7 +269,7 @@ partial class NetworkSniffer
             this.SubnetMaskTextBox.BackColor = System.Drawing.SystemColors.Control;
             this.SubnetMaskTextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.SubnetMaskTextBox.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.SubnetMaskTextBox.Location = new System.Drawing.Point(144, 257);
+            this.SubnetMaskTextBox.Location = new System.Drawing.Point(144, 245);
             this.SubnetMaskTextBox.Name = "SubnetMaskTextBox";
             this.SubnetMaskTextBox.ReadOnly = true;
             this.SubnetMaskTextBox.Size = new System.Drawing.Size(188, 27);
@@ -267,7 +281,7 @@ partial class NetworkSniffer
             this.NetIDTextBox.BackColor = System.Drawing.SystemColors.Control;
             this.NetIDTextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.NetIDTextBox.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.NetIDTextBox.Location = new System.Drawing.Point(442, 257);
+            this.NetIDTextBox.Location = new System.Drawing.Point(442, 245);
             this.NetIDTextBox.Name = "NetIDTextBox";
             this.NetIDTextBox.ReadOnly = true;
             this.NetIDTextBox.Size = new System.Drawing.Size(188, 27);
@@ -279,7 +293,7 @@ partial class NetworkSniffer
             this.FirstIPTextBox.BackColor = System.Drawing.SystemColors.Control;
             this.FirstIPTextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.FirstIPTextBox.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.FirstIPTextBox.Location = new System.Drawing.Point(442, 286);
+            this.FirstIPTextBox.Location = new System.Drawing.Point(442, 274);
             this.FirstIPTextBox.Name = "FirstIPTextBox";
             this.FirstIPTextBox.ReadOnly = true;
             this.FirstIPTextBox.Size = new System.Drawing.Size(188, 27);
@@ -291,7 +305,7 @@ partial class NetworkSniffer
             this.LastIPTextBox.BackColor = System.Drawing.SystemColors.Control;
             this.LastIPTextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.LastIPTextBox.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.LastIPTextBox.Location = new System.Drawing.Point(442, 315);
+            this.LastIPTextBox.Location = new System.Drawing.Point(442, 303);
             this.LastIPTextBox.Name = "LastIPTextBox";
             this.LastIPTextBox.ReadOnly = true;
             this.LastIPTextBox.Size = new System.Drawing.Size(188, 27);
@@ -303,7 +317,7 @@ partial class NetworkSniffer
             this.BroadcastTextBox.BackColor = System.Drawing.SystemColors.Control;
             this.BroadcastTextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.BroadcastTextBox.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.BroadcastTextBox.Location = new System.Drawing.Point(442, 344);
+            this.BroadcastTextBox.Location = new System.Drawing.Point(442, 332);
             this.BroadcastTextBox.Name = "BroadcastTextBox";
             this.BroadcastTextBox.ReadOnly = true;
             this.BroadcastTextBox.Size = new System.Drawing.Size(188, 27);
@@ -313,7 +327,7 @@ partial class NetworkSniffer
             // LastIPLabel
             // 
             this.LastIPLabel.AutoSize = true;
-            this.LastIPLabel.Location = new System.Drawing.Point(392, 321);
+            this.LastIPLabel.Location = new System.Drawing.Point(392, 309);
             this.LastIPLabel.Name = "LastIPLabel";
             this.LastIPLabel.Size = new System.Drawing.Size(44, 15);
             this.LastIPLabel.TabIndex = 24;
@@ -322,7 +336,7 @@ partial class NetworkSniffer
             // BroadcastLabel
             // 
             this.BroadcastLabel.AutoSize = true;
-            this.BroadcastLabel.Location = new System.Drawing.Point(374, 350);
+            this.BroadcastLabel.Location = new System.Drawing.Point(374, 338);
             this.BroadcastLabel.Name = "BroadcastLabel";
             this.BroadcastLabel.Size = new System.Drawing.Size(62, 15);
             this.BroadcastLabel.TabIndex = 25;
@@ -331,7 +345,7 @@ partial class NetworkSniffer
             // MaskLabel
             // 
             this.MaskLabel.AutoSize = true;
-            this.MaskLabel.Location = new System.Drawing.Point(43, 118);
+            this.MaskLabel.Location = new System.Drawing.Point(43, 111);
             this.MaskLabel.Name = "MaskLabel";
             this.MaskLabel.Size = new System.Drawing.Size(38, 15);
             this.MaskLabel.TabIndex = 26;
@@ -342,7 +356,7 @@ partial class NetworkSniffer
             this.NetworkGroupBox.Controls.Add(this.MaskTextLabel);
             this.NetworkGroupBox.Location = new System.Drawing.Point(12, 5);
             this.NetworkGroupBox.Name = "NetworkGroupBox";
-            this.NetworkGroupBox.Size = new System.Drawing.Size(757, 387);
+            this.NetworkGroupBox.Size = new System.Drawing.Size(757, 372);
             this.NetworkGroupBox.TabIndex = 27;
             this.NetworkGroupBox.TabStop = false;
             this.NetworkGroupBox.Text = "Network";
@@ -350,7 +364,7 @@ partial class NetworkSniffer
             // MaskTextLabel
             // 
             this.MaskTextLabel.AutoSize = true;
-            this.MaskTextLabel.Location = new System.Drawing.Point(664, 203);
+            this.MaskTextLabel.Location = new System.Drawing.Point(660, 200);
             this.MaskTextLabel.Name = "MaskTextLabel";
             this.MaskTextLabel.Size = new System.Drawing.Size(86, 15);
             this.MaskTextLabel.TabIndex = 0;
@@ -358,6 +372,8 @@ partial class NetworkSniffer
             // 
             // ProcessGroupBox
             // 
+            this.ProcessGroupBox.Controls.Add(this.EnableVerboseLlabel);
+            this.ProcessGroupBox.Controls.Add(this.EnableVerboseButton);
             this.ProcessGroupBox.Controls.Add(this.AutoTimeoutLabel);
             this.ProcessGroupBox.Controls.Add(this.AutoTimeoutButton);
             this.ProcessGroupBox.Controls.Add(this.StartButton);
@@ -365,12 +381,34 @@ partial class NetworkSniffer
             this.ProcessGroupBox.Controls.Add(this.TimeoutNumericUpDown);
             this.ProcessGroupBox.Controls.Add(this.FoundDevicesLabel);
             this.ProcessGroupBox.Controls.Add(this.panel1);
-            this.ProcessGroupBox.Location = new System.Drawing.Point(12, 409);
+            this.ProcessGroupBox.Location = new System.Drawing.Point(12, 383);
             this.ProcessGroupBox.Name = "ProcessGroupBox";
-            this.ProcessGroupBox.Size = new System.Drawing.Size(757, 383);
+            this.ProcessGroupBox.Size = new System.Drawing.Size(757, 409);
             this.ProcessGroupBox.TabIndex = 28;
             this.ProcessGroupBox.TabStop = false;
             this.ProcessGroupBox.Text = "Process";
+            // 
+            // EnableVerboseLlabel
+            // 
+            this.EnableVerboseLlabel.AutoSize = true;
+            this.EnableVerboseLlabel.Location = new System.Drawing.Point(634, 154);
+            this.EnableVerboseLlabel.Name = "EnableVerboseLlabel";
+            this.EnableVerboseLlabel.Size = new System.Drawing.Size(51, 15);
+            this.EnableVerboseLlabel.TabIndex = 8;
+            this.EnableVerboseLlabel.Text = "Verbose:";
+            // 
+            // EnableVerboseButton
+            // 
+            this.EnableVerboseButton.FlatAppearance.BorderSize = 0;
+            this.EnableVerboseButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.EnableVerboseButton.Image = ((System.Drawing.Image)(resources.GetObject("EnableVerboseButton.Image")));
+            this.EnableVerboseButton.Location = new System.Drawing.Point(634, 169);
+            this.EnableVerboseButton.Name = "EnableVerboseButton";
+            this.EnableVerboseButton.Size = new System.Drawing.Size(108, 29);
+            this.EnableVerboseButton.TabIndex = 7;
+            this.EnableVerboseButton.Tag = "false";
+            this.EnableVerboseButton.UseVisualStyleBackColor = true;
+            this.EnableVerboseButton.Click += new System.EventHandler(this.EnableVerboseButton_Click);
             // 
             // AutoTimeoutLabel
             // 
@@ -397,7 +435,7 @@ partial class NetworkSniffer
             // StartButton
             // 
             this.StartButton.BackColor = System.Drawing.Color.MediumAquamarine;
-            this.StartButton.Location = new System.Drawing.Point(634, 326);
+            this.StartButton.Location = new System.Drawing.Point(634, 354);
             this.StartButton.Name = "StartButton";
             this.StartButton.Size = new System.Drawing.Size(108, 38);
             this.StartButton.TabIndex = 4;
@@ -450,9 +488,9 @@ partial class NetworkSniffer
             // 
             this.panel1.BackColor = System.Drawing.Color.White;
             this.panel1.Controls.Add(this.FoundIPTreeView);
-            this.panel1.Location = new System.Drawing.Point(30, 49);
+            this.panel1.Location = new System.Drawing.Point(11, 49);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(588, 315);
+            this.panel1.Size = new System.Drawing.Size(607, 343);
             this.panel1.TabIndex = 0;
             // 
             // FoundIPTreeView
@@ -463,7 +501,7 @@ partial class NetworkSniffer
             this.FoundIPTreeView.Location = new System.Drawing.Point(18, 18);
             this.FoundIPTreeView.Name = "FoundIPTreeView";
             this.FoundIPTreeView.SelectedImageIndex = 0;
-            this.FoundIPTreeView.Size = new System.Drawing.Size(552, 282);
+            this.FoundIPTreeView.Size = new System.Drawing.Size(571, 307);
             this.FoundIPTreeView.TabIndex = 0;
             // 
             // imageList1
@@ -489,9 +527,9 @@ partial class NetworkSniffer
             // 
             this.LogGroupBox.Controls.Add(this.LogTextBox);
             this.LogGroupBox.Controls.Add(this.progressBar);
-            this.LogGroupBox.Location = new System.Drawing.Point(796, 409);
+            this.LogGroupBox.Location = new System.Drawing.Point(783, 383);
             this.LogGroupBox.Name = "LogGroupBox";
-            this.LogGroupBox.Size = new System.Drawing.Size(655, 383);
+            this.LogGroupBox.Size = new System.Drawing.Size(668, 409);
             this.LogGroupBox.TabIndex = 29;
             this.LogGroupBox.TabStop = false;
             this.LogGroupBox.Text = "Log";
@@ -501,25 +539,149 @@ partial class NetworkSniffer
             this.LogTextBox.Location = new System.Drawing.Point(15, 52);
             this.LogTextBox.Multiline = true;
             this.LogTextBox.Name = "LogTextBox";
-            this.LogTextBox.Size = new System.Drawing.Size(621, 312);
+            this.LogTextBox.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.LogTextBox.Size = new System.Drawing.Size(636, 340);
             this.LogTextBox.TabIndex = 1;
             // 
             // progressBar
             // 
             this.progressBar.Location = new System.Drawing.Point(15, 23);
             this.progressBar.Name = "progressBar";
-            this.progressBar.Size = new System.Drawing.Size(621, 23);
+            this.progressBar.Size = new System.Drawing.Size(636, 23);
             this.progressBar.TabIndex = 0;
             // 
             // PingerBackgroundWorker
             // 
             this.PingerBackgroundWorker.DoWork += new System.ComponentModel.DoWorkEventHandler(this.PingerBackgroundWorker_DoWork);
             // 
+            // ParametersGroupBox
+            // 
+            this.ParametersGroupBox.Controls.Add(this.DNSServersListView);
+            this.ParametersGroupBox.Controls.Add(this.DNSServersLabel);
+            this.ParametersGroupBox.Controls.Add(this.ScopeNameLabel);
+            this.ParametersGroupBox.Controls.Add(this.ScopeNameTextBox);
+            this.ParametersGroupBox.Controls.Add(this.DomainNameLabel);
+            this.ParametersGroupBox.Controls.Add(this.DomainNameTextBox);
+            this.ParametersGroupBox.Controls.Add(this.NodeTypeLabel);
+            this.ParametersGroupBox.Controls.Add(this.NodeTypeTextBox);
+            this.ParametersGroupBox.Controls.Add(this.HostNameLabel);
+            this.ParametersGroupBox.Controls.Add(this.HostNameTextBox);
+            this.ParametersGroupBox.Location = new System.Drawing.Point(783, 5);
+            this.ParametersGroupBox.Name = "ParametersGroupBox";
+            this.ParametersGroupBox.Size = new System.Drawing.Size(668, 372);
+            this.ParametersGroupBox.TabIndex = 30;
+            this.ParametersGroupBox.TabStop = false;
+            this.ParametersGroupBox.Text = "Local Network Parameters";
+            // 
+            // DNSServersListView
+            // 
+            this.DNSServersListView.AutoArrange = false;
+            this.DNSServersListView.GridLines = true;
+            this.DNSServersListView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
+            this.DNSServersListView.Location = new System.Drawing.Point(336, 54);
+            this.DNSServersListView.MultiSelect = false;
+            this.DNSServersListView.Name = "DNSServersListView";
+            this.DNSServersListView.ShowGroups = false;
+            this.DNSServersListView.Size = new System.Drawing.Size(300, 110);
+            this.DNSServersListView.TabIndex = 9;
+            this.DNSServersListView.UseCompatibleStateImageBehavior = false;
+            this.DNSServersListView.View = System.Windows.Forms.View.List;
+            // 
+            // DNSServersLabel
+            // 
+            this.DNSServersLabel.AutoSize = true;
+            this.DNSServersLabel.Location = new System.Drawing.Point(336, 34);
+            this.DNSServersLabel.Name = "DNSServersLabel";
+            this.DNSServersLabel.Size = new System.Drawing.Size(76, 15);
+            this.DNSServersLabel.TabIndex = 8;
+            this.DNSServersLabel.Text = "DNS Servers: ";
+            // 
+            // ScopeNameLabel
+            // 
+            this.ScopeNameLabel.AutoSize = true;
+            this.ScopeNameLabel.Location = new System.Drawing.Point(15, 141);
+            this.ScopeNameLabel.Name = "ScopeNameLabel";
+            this.ScopeNameLabel.Size = new System.Drawing.Size(112, 15);
+            this.ScopeNameLabel.TabIndex = 7;
+            this.ScopeNameLabel.Text = "DHCP scope name: ";
+            // 
+            // ScopeNameTextBox
+            // 
+            this.ScopeNameTextBox.BackColor = System.Drawing.SystemColors.Control;
+            this.ScopeNameTextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.ScopeNameTextBox.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.ScopeNameTextBox.Location = new System.Drawing.Point(132, 137);
+            this.ScopeNameTextBox.Name = "ScopeNameTextBox";
+            this.ScopeNameTextBox.ReadOnly = true;
+            this.ScopeNameTextBox.Size = new System.Drawing.Size(192, 27);
+            this.ScopeNameTextBox.TabIndex = 6;
+            // 
+            // DomainNameLabel
+            // 
+            this.DomainNameLabel.AutoSize = true;
+            this.DomainNameLabel.Location = new System.Drawing.Point(15, 106);
+            this.DomainNameLabel.Name = "DomainNameLabel";
+            this.DomainNameLabel.Size = new System.Drawing.Size(90, 15);
+            this.DomainNameLabel.TabIndex = 5;
+            this.DomainNameLabel.Text = "Domain Name: ";
+            // 
+            // DomainNameTextBox
+            // 
+            this.DomainNameTextBox.BackColor = System.Drawing.SystemColors.Control;
+            this.DomainNameTextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.DomainNameTextBox.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.DomainNameTextBox.Location = new System.Drawing.Point(132, 102);
+            this.DomainNameTextBox.Name = "DomainNameTextBox";
+            this.DomainNameTextBox.ReadOnly = true;
+            this.DomainNameTextBox.Size = new System.Drawing.Size(192, 27);
+            this.DomainNameTextBox.TabIndex = 4;
+            // 
+            // NodeTypeLabel
+            // 
+            this.NodeTypeLabel.AutoSize = true;
+            this.NodeTypeLabel.Location = new System.Drawing.Point(15, 71);
+            this.NodeTypeLabel.Name = "NodeTypeLabel";
+            this.NodeTypeLabel.Size = new System.Drawing.Size(109, 15);
+            this.NodeTypeLabel.TabIndex = 3;
+            this.NodeTypeLabel.Text = "NetBios Node type:";
+            // 
+            // NodeTypeTextBox
+            // 
+            this.NodeTypeTextBox.BackColor = System.Drawing.SystemColors.Control;
+            this.NodeTypeTextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.NodeTypeTextBox.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.NodeTypeTextBox.Location = new System.Drawing.Point(132, 67);
+            this.NodeTypeTextBox.Name = "NodeTypeTextBox";
+            this.NodeTypeTextBox.ReadOnly = true;
+            this.NodeTypeTextBox.Size = new System.Drawing.Size(192, 27);
+            this.NodeTypeTextBox.TabIndex = 2;
+            // 
+            // HostNameLabel
+            // 
+            this.HostNameLabel.AutoSize = true;
+            this.HostNameLabel.Location = new System.Drawing.Point(15, 36);
+            this.HostNameLabel.Name = "HostNameLabel";
+            this.HostNameLabel.Size = new System.Drawing.Size(73, 15);
+            this.HostNameLabel.TabIndex = 1;
+            this.HostNameLabel.Text = "Host Name: ";
+            // 
+            // HostNameTextBox
+            // 
+            this.HostNameTextBox.BackColor = System.Drawing.SystemColors.Control;
+            this.HostNameTextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.HostNameTextBox.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.HostNameTextBox.Location = new System.Drawing.Point(132, 32);
+            this.HostNameTextBox.Name = "HostNameTextBox";
+            this.HostNameTextBox.ReadOnly = true;
+            this.HostNameTextBox.Size = new System.Drawing.Size(192, 27);
+            this.HostNameTextBox.TabIndex = 0;
+            // 
             // NetworkSniffer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1463, 804);
+            this.Controls.Add(this.ParametersGroupBox);
             this.Controls.Add(this.LogGroupBox);
             this.Controls.Add(this.ProcessGroupBox);
             this.Controls.Add(this.MaskLabel);
@@ -559,6 +721,8 @@ partial class NetworkSniffer
             this.panel1.ResumeLayout(false);
             this.LogGroupBox.ResumeLayout(false);
             this.LogGroupBox.PerformLayout();
+            this.ParametersGroupBox.ResumeLayout(false);
+            this.ParametersGroupBox.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -607,4 +771,17 @@ partial class NetworkSniffer
     private ProgressBar progressBar;
     private TextBox LogTextBox;
     private BackgroundWorker PingerBackgroundWorker;
+    private GroupBox ParametersGroupBox;
+    private Label HostNameLabel;
+    private TextBox HostNameTextBox;
+    private Label ScopeNameLabel;
+    private TextBox ScopeNameTextBox;
+    private Label DomainNameLabel;
+    private TextBox DomainNameTextBox;
+    private Label NodeTypeLabel;
+    private TextBox NodeTypeTextBox;
+    private Label DNSServersLabel;
+    private ListView DNSServersListView;
+    private Label EnableVerboseLlabel;
+    private Button EnableVerboseButton;
 }

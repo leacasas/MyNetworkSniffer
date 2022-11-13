@@ -2,12 +2,15 @@ using MyNetworkSniffer.Domain;
 using System.ComponentModel;
 using System.Net.Sockets;
 using System.Text;
+using System.Linq;
+using System.Diagnostics;
 
 namespace MyNetworkSniffer;
 
 public partial class NetworkSniffer : Form
 {
     private int _pingedCount;
+    private bool _enabledVerbose;
 
     string IP
     {
@@ -29,6 +32,7 @@ public partial class NetworkSniffer : Form
     {
         InitializeComponent();
         GetLocalIPAddress();
+        GetLocalNetworkParameters();
     }
 
     #region UI events
@@ -53,14 +57,10 @@ public partial class NetworkSniffer : Form
             StringBuilder sb = new();
 
             for (int i = 0; i < MaskBitsTrackBar.Value; i++)
-            {
                 sb.Append('1');
-            }
 
             for (int i = MaskBitsTrackBar.Value; i < MaskBitsTrackBar.Maximum; i++)
-            {
                 sb.Append('0');
-            }
 
             MaskBitsRichTextBox.Text = sb.ToString();
 
@@ -120,7 +120,10 @@ public partial class NetworkSniffer : Form
             {
                 string ip = EnterIpRadioButton.Checked ? IPTextBox.Text : (string)IPcomboBox.SelectedItem;
 
-                PingAllDevices(ip, ParseTag());
+                if (_enabledVerbose)
+                    WriteToLogBox($"Started pinging devices in {ip}", _enabledVerbose);
+
+                PingAllDevices(ip, ParseTag(AutoTimeoutButton.Tag));
             });
 
             int progressLimit = int.Parse(MaxHostsCountTextBox.Text) * int.Parse(MaxIDTextBox.Text);
@@ -136,8 +139,7 @@ public partial class NetworkSniffer : Form
                         SafeInvoke(progressBar, () => progressBar.Value = 0);
 
                         _pingedCount = 0;
-
-                        SafeInvoke(LogTextBox, () => LogTextBox.AppendText("-Pinged all detected devices-"));
+                        WriteToLogBox("-Pinged all detected devices-");
 
                         break;
                     }
@@ -152,6 +154,12 @@ public partial class NetworkSniffer : Form
 
     private void StartButton_Click(object sender, EventArgs e)
     {
+        if (string.IsNullOrWhiteSpace(IP))
+        {
+            MessageBox.Show("Please select or choose an IP address");
+            return;
+        }
+
         if (PingerBackgroundWorker.IsBusy)
             return;
 
@@ -161,11 +169,22 @@ public partial class NetworkSniffer : Form
 
     private void AutoTimeoutButton_Click(object sender, EventArgs e)
     {
-        bool tag = ParseTag();
+        bool currentTagValue = ParseTag(AutoTimeoutButton.Tag);
 
-        AutoTimeoutButton.Image = tag ? Properties.Resources.switch_off : Properties.Resources.switch_on;
-        AutoTimeoutButton.Tag = !tag;
-        TimeoutNumericUpDown.Enabled = tag;
+        AutoTimeoutButton.Image = currentTagValue ? Properties.Resources.switch_off : Properties.Resources.switch_on;
+        AutoTimeoutButton.Tag = !currentTagValue;
+
+        TimeoutNumericUpDown.Enabled = currentTagValue;
+    }
+
+    private void EnableVerboseButton_Click(object sender, EventArgs e)
+    {
+        bool currentTagValue = ParseTag(EnableVerboseButton.Tag);
+
+        EnableVerboseButton.Image = currentTagValue ? Properties.Resources.switch_off : Properties.Resources.switch_on;
+        EnableVerboseButton.Tag = !currentTagValue;
+
+        _enabledVerbose = !currentTagValue;
     }
 
     #endregion
@@ -176,6 +195,19 @@ public partial class NetworkSniffer : Form
     {
         IPcomboBox.Items.Clear();
         IPcomboBox.Items.AddRange(IPHelper.GetIPAddresses(AddressFamily.InterNetwork).ToArray());
+    }
+
+    private void GetLocalNetworkParameters()
+    {
+        FixedInfo networkParameters = IPHelper.GetNetworkParameters();
+
+        HostNameTextBox.Text = networkParameters.HostName;
+        NodeTypeTextBox.Text = networkParameters.NodeType.ToString();
+        DomainNameTextBox.Text = networkParameters.DomainName;
+        ScopeNameTextBox.Text = networkParameters.ScopeId;
+
+        DNSServersListView.Items.Clear();
+        DNSServersListView.Items.AddRange(networkParameters.DnsServers.Select(x => new ListViewItem(x.IpAddress.String.ToString())).ToArray());
     }
 
     private void RefreshControls(object sender, EventArgs e)
@@ -240,6 +272,9 @@ public partial class NetworkSniffer : Form
 
         IPClass iPClass = IPHelper.GetIPClass(ipAddress);
 
+        if (_enabledVerbose)
+            WriteToLogBox($"{ipAddress} is class {iPClass}", _enabledVerbose);
+
         if (iPClass == IPClass.D)
             MessageBox.Show("Cannot ping multicast address");
 
@@ -248,19 +283,22 @@ public partial class NetworkSniffer : Form
 
         if (iPClass == IPClass.A)
         {
-            SafeInvoke(LogTextBox, () => LogTextBox.AppendText(logPingMessage(ipSegments[0], 0, 0, 0)));
+            WriteToLogBox(logPingMessage(ipSegments[0], 0, 0, 0));
 
             for (int a = 1; a < 255; a++)
             {
-                SafeInvoke(LogTextBox, () => LogTextBox.AppendText(logPingMessage(ipSegments[0], a, 0, 0)));
+                WriteToLogBox(logPingMessage(ipSegments[0], a, 0, 0));
 
                 for (int b = 1; b < 255; b++)
                 {
-                    SafeInvoke(LogTextBox, () => LogTextBox.AppendText(logPingMessage(ipSegments[0], a, b, 0)));
+                    WriteToLogBox(logPingMessage(ipSegments[0], a, b, 0));
 
                     for (int c = 1; c < 255; c++)
                     {
                         string ipToPing = $"{ipSegments[0]}.{a}.{b}.{c}";
+
+                        if (_enabledVerbose)
+                            WriteToLogBox($"sending ping to {ipToPing}", _enabledVerbose);
 
                         PingDevice(ipToPing, autoTimeout, (int)TimeoutNumericUpDown.Value);
                     }
@@ -271,27 +309,24 @@ public partial class NetworkSniffer : Form
 
         if (iPClass == IPClass.B)
         {
-            SafeInvoke(LogTextBox, () => LogTextBox.AppendText(logPingMessage(ipSegments[0], ipSegments[1], 0, 0)));
+            WriteToLogBox(logPingMessage(ipSegments[0], ipSegments[1], 0, 0));
 
             for (int a = 1; a < 255; a++)
             {
-                SafeInvoke(LogTextBox, () => LogTextBox.AppendText(logPingMessage(ipSegments[0], ipSegments[1], a, 0)));
+                WriteToLogBox(logPingMessage(ipSegments[0], ipSegments[1], a, 0));
 
                 for (int b = 1; b < 255; b++)
                 {
                     string ipToPing = $"{ipSegments[0]}.{ipSegments[1]}.{a}.{b}";
 
                     PingDevice(ipToPing, autoTimeout, (int)TimeoutNumericUpDown.Value);
-
                 }
-
             }
-
         }
 
         if (iPClass == IPClass.C)
         {
-            SafeInvoke(LogTextBox, () => LogTextBox.AppendText(logPingMessage(ipSegments[0], ipSegments[1], ipSegments[2], 0)));
+            WriteToLogBox(logPingMessage(ipSegments[0], ipSegments[1], ipSegments[2], 0));
 
             for (int a = 1; a < 255; a++)
             {
@@ -303,7 +338,7 @@ public partial class NetworkSniffer : Form
 
         static string logPingMessage(object a, object b, object c, object d)
         {
-            return $"ping all in {a}.{b}.{c}.{d} available devices {Environment.NewLine}";
+            return $"ping all in {a}.{b}.{c}.{d} available devices";
         }
     }
 
@@ -328,6 +363,9 @@ public partial class NetworkSniffer : Form
 
         if (eventArgs.Status == PingStatus.Completed)
         {
+            if (_enabledVerbose)
+                WriteToLogBox($"{eventArgs.HostName} found with IP {eventArgs.IP}", _enabledVerbose);
+
             ActiveDevice activeDevice = new(eventArgs.IP, eventArgs.IPV6Address, eventArgs.MACAddress, eventArgs.HostName);
 
             SafeInvoke(FoundIPTreeView, () =>
@@ -356,21 +394,36 @@ public partial class NetworkSniffer : Form
                 }
             });
         }
+        else if (eventArgs.Status == PingStatus.InvalidHost)
+        {
+            if (_enabledVerbose)
+                WriteToLogBox($"Couldn't find host {eventArgs.IP}, likely invalid", _enabledVerbose);
+        }
+        else
+        {
+            if (_enabledVerbose)
+                WriteToLogBox($"ping did not complete. Status: {eventArgs.Status}, Message: {eventArgs.Message}", _enabledVerbose);
+        }
     }
 
-    private bool ParseTag()
+    private static bool ParseTag(object tagValue)
     {
-        if (AutoTimeoutButton.Tag is bool boolean)
+        if (tagValue is bool boolean)
             return boolean;
 
-        if (AutoTimeoutButton.Tag is string)
+        if (tagValue is string)
         {
-            _ = bool.TryParse((string?)AutoTimeoutButton.Tag, out bool result);
+            _ = bool.TryParse((string?)tagValue, out bool result);
 
             return result;
         }
 
         return false;
+    }
+
+    private void WriteToLogBox(string text, bool verboseMessage = false)
+    {
+        SafeInvoke(LogTextBox, () => LogTextBox.AppendText((verboseMessage ? "__" : "") + text + Environment.NewLine));
     }
 
     #endregion
