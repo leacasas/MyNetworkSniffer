@@ -48,9 +48,17 @@ namespace MyNetworkSniffer
                     callbackDelegate?.Invoke(this, args);
                 }
             }
-            catch (Exception ex)
+            catch (SocketException ex)
             {
                 args.Status = PingStatus.InvalidHost;
+                args.Message = ex.Message;
+                args.IP = hostNameOrAddress;
+
+                callbackDelegate?.Invoke(this, args);
+            }
+            catch (Exception ex)
+            {
+                args.Status = PingStatus.Timeout;
                 args.Message = ex.Message;
                 args.IP = string.Empty;
 
