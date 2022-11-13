@@ -74,14 +74,16 @@ partial class NetworkSniffer
             this.progressBar = new System.Windows.Forms.ProgressBar();
             this.PingerBackgroundWorker = new System.ComponentModel.BackgroundWorker();
             this.ParametersGroupBox = new System.Windows.Forms.GroupBox();
-            this.HostNameTextBox = new System.Windows.Forms.TextBox();
+            this.ScopeNameLabel = new System.Windows.Forms.Label();
+            this.ScopeNameTextBox = new System.Windows.Forms.TextBox();
+            this.DomainNameLabel = new System.Windows.Forms.Label();
+            this.DomainNameTextBox = new System.Windows.Forms.TextBox();
+            this.NodeTypeLabel = new System.Windows.Forms.Label();
+            this.NodeTypeTextBox = new System.Windows.Forms.TextBox();
             this.HostNameLabel = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.label2 = new System.Windows.Forms.Label();
-            this.textBox2 = new System.Windows.Forms.TextBox();
-            this.label3 = new System.Windows.Forms.Label();
-            this.textBox3 = new System.Windows.Forms.TextBox();
+            this.HostNameTextBox = new System.Windows.Forms.TextBox();
+            this.DNSServersLabel = new System.Windows.Forms.Label();
+            this.DNSServersListView = new System.Windows.Forms.ListView();
             ((System.ComponentModel.ISupportInitialize)(this.MaskBitsTrackBar)).BeginInit();
             this.NetworkGroupBox.SuspendLayout();
             this.ProcessGroupBox.SuspendLayout();
@@ -527,12 +529,14 @@ partial class NetworkSniffer
             // 
             // ParametersGroupBox
             // 
-            this.ParametersGroupBox.Controls.Add(this.label2);
-            this.ParametersGroupBox.Controls.Add(this.textBox2);
-            this.ParametersGroupBox.Controls.Add(this.label3);
-            this.ParametersGroupBox.Controls.Add(this.textBox3);
-            this.ParametersGroupBox.Controls.Add(this.label1);
-            this.ParametersGroupBox.Controls.Add(this.textBox1);
+            this.ParametersGroupBox.Controls.Add(this.DNSServersListView);
+            this.ParametersGroupBox.Controls.Add(this.DNSServersLabel);
+            this.ParametersGroupBox.Controls.Add(this.ScopeNameLabel);
+            this.ParametersGroupBox.Controls.Add(this.ScopeNameTextBox);
+            this.ParametersGroupBox.Controls.Add(this.DomainNameLabel);
+            this.ParametersGroupBox.Controls.Add(this.DomainNameTextBox);
+            this.ParametersGroupBox.Controls.Add(this.NodeTypeLabel);
+            this.ParametersGroupBox.Controls.Add(this.NodeTypeTextBox);
             this.ParametersGroupBox.Controls.Add(this.HostNameLabel);
             this.ParametersGroupBox.Controls.Add(this.HostNameTextBox);
             this.ParametersGroupBox.Location = new System.Drawing.Point(796, 5);
@@ -542,14 +546,59 @@ partial class NetworkSniffer
             this.ParametersGroupBox.TabStop = false;
             this.ParametersGroupBox.Text = "Local Network Parameters";
             // 
-            // HostNameTextBox
+            // ScopeNameLabel
             // 
-            this.HostNameTextBox.BackColor = System.Drawing.SystemColors.Control;
-            this.HostNameTextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.HostNameTextBox.Location = new System.Drawing.Point(94, 32);
-            this.HostNameTextBox.Name = "HostNameTextBox";
-            this.HostNameTextBox.Size = new System.Drawing.Size(197, 23);
-            this.HostNameTextBox.TabIndex = 0;
+            this.ScopeNameLabel.AutoSize = true;
+            this.ScopeNameLabel.Location = new System.Drawing.Point(15, 141);
+            this.ScopeNameLabel.Name = "ScopeNameLabel";
+            this.ScopeNameLabel.Size = new System.Drawing.Size(112, 15);
+            this.ScopeNameLabel.TabIndex = 7;
+            this.ScopeNameLabel.Text = "DHCP scope name: ";
+            // 
+            // ScopeNameTextBox
+            // 
+            this.ScopeNameTextBox.BackColor = System.Drawing.SystemColors.Control;
+            this.ScopeNameTextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.ScopeNameTextBox.Location = new System.Drawing.Point(132, 137);
+            this.ScopeNameTextBox.Name = "ScopeNameTextBox";
+            this.ScopeNameTextBox.Size = new System.Drawing.Size(192, 23);
+            this.ScopeNameTextBox.TabIndex = 6;
+            // 
+            // DomainNameLabel
+            // 
+            this.DomainNameLabel.AutoSize = true;
+            this.DomainNameLabel.Location = new System.Drawing.Point(15, 106);
+            this.DomainNameLabel.Name = "DomainNameLabel";
+            this.DomainNameLabel.Size = new System.Drawing.Size(90, 15);
+            this.DomainNameLabel.TabIndex = 5;
+            this.DomainNameLabel.Text = "Domain Name: ";
+            // 
+            // DomainNameTextBox
+            // 
+            this.DomainNameTextBox.BackColor = System.Drawing.SystemColors.Control;
+            this.DomainNameTextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.DomainNameTextBox.Location = new System.Drawing.Point(132, 102);
+            this.DomainNameTextBox.Name = "DomainNameTextBox";
+            this.DomainNameTextBox.Size = new System.Drawing.Size(192, 23);
+            this.DomainNameTextBox.TabIndex = 4;
+            // 
+            // NodeTypeLabel
+            // 
+            this.NodeTypeLabel.AutoSize = true;
+            this.NodeTypeLabel.Location = new System.Drawing.Point(15, 71);
+            this.NodeTypeLabel.Name = "NodeTypeLabel";
+            this.NodeTypeLabel.Size = new System.Drawing.Size(109, 15);
+            this.NodeTypeLabel.TabIndex = 3;
+            this.NodeTypeLabel.Text = "NetBios Node type:";
+            // 
+            // NodeTypeTextBox
+            // 
+            this.NodeTypeTextBox.BackColor = System.Drawing.SystemColors.Control;
+            this.NodeTypeTextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.NodeTypeTextBox.Location = new System.Drawing.Point(132, 67);
+            this.NodeTypeTextBox.Name = "NodeTypeTextBox";
+            this.NodeTypeTextBox.Size = new System.Drawing.Size(192, 23);
+            this.NodeTypeTextBox.TabIndex = 2;
             // 
             // HostNameLabel
             // 
@@ -560,59 +609,31 @@ partial class NetworkSniffer
             this.HostNameLabel.TabIndex = 1;
             this.HostNameLabel.Text = "Host Name: ";
             // 
-            // label1
+            // HostNameTextBox
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(15, 71);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(73, 15);
-            this.label1.TabIndex = 3;
-            this.label1.Text = "Host Name: ";
+            this.HostNameTextBox.BackColor = System.Drawing.SystemColors.Control;
+            this.HostNameTextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.HostNameTextBox.Location = new System.Drawing.Point(132, 32);
+            this.HostNameTextBox.Name = "HostNameTextBox";
+            this.HostNameTextBox.Size = new System.Drawing.Size(192, 23);
+            this.HostNameTextBox.TabIndex = 0;
             // 
-            // textBox1
+            // DNSServersLabel
             // 
-            this.textBox1.BackColor = System.Drawing.SystemColors.Control;
-            this.textBox1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.textBox1.Location = new System.Drawing.Point(94, 67);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(197, 23);
-            this.textBox1.TabIndex = 2;
+            this.DNSServersLabel.AutoSize = true;
+            this.DNSServersLabel.Location = new System.Drawing.Point(336, 34);
+            this.DNSServersLabel.Name = "DNSServersLabel";
+            this.DNSServersLabel.Size = new System.Drawing.Size(76, 15);
+            this.DNSServersLabel.TabIndex = 8;
+            this.DNSServersLabel.Text = "DNS Servers: ";
             // 
-            // label2
+            // DNSServersListView
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(15, 141);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(73, 15);
-            this.label2.TabIndex = 7;
-            this.label2.Text = "Host Name: ";
-            // 
-            // textBox2
-            // 
-            this.textBox2.BackColor = System.Drawing.SystemColors.Control;
-            this.textBox2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.textBox2.Location = new System.Drawing.Point(94, 137);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(197, 23);
-            this.textBox2.TabIndex = 6;
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(15, 106);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(73, 15);
-            this.label3.TabIndex = 5;
-            this.label3.Text = "Host Name: ";
-            // 
-            // textBox3
-            // 
-            this.textBox3.BackColor = System.Drawing.SystemColors.Control;
-            this.textBox3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.textBox3.Location = new System.Drawing.Point(94, 102);
-            this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(197, 23);
-            this.textBox3.TabIndex = 4;
+            this.DNSServersListView.Location = new System.Drawing.Point(336, 54);
+            this.DNSServersListView.Name = "DNSServersListView";
+            this.DNSServersListView.Size = new System.Drawing.Size(300, 106);
+            this.DNSServersListView.TabIndex = 9;
+            this.DNSServersListView.UseCompatibleStateImageBehavior = false;
             // 
             // NetworkSniffer
             // 
@@ -712,10 +733,12 @@ partial class NetworkSniffer
     private GroupBox ParametersGroupBox;
     private Label HostNameLabel;
     private TextBox HostNameTextBox;
-    private Label label2;
-    private TextBox textBox2;
-    private Label label3;
-    private TextBox textBox3;
-    private Label label1;
-    private TextBox textBox1;
+    private Label ScopeNameLabel;
+    private TextBox ScopeNameTextBox;
+    private Label DomainNameLabel;
+    private TextBox DomainNameTextBox;
+    private Label NodeTypeLabel;
+    private TextBox NodeTypeTextBox;
+    private Label DNSServersLabel;
+    private ListView DNSServersListView;
 }

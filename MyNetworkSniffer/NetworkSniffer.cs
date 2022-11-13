@@ -29,6 +29,7 @@ public partial class NetworkSniffer : Form
     {
         InitializeComponent();
         GetLocalIPAddress();
+        GetLocalNetworkParameters();
     }
 
     #region UI events
@@ -152,8 +153,6 @@ public partial class NetworkSniffer : Form
 
     private void StartButton_Click(object sender, EventArgs e)
     {
-        var info = IPHelper.GetNetworkParameters();//for testing, move to own ctrl. Also, implement the full linked list
-
         if (PingerBackgroundWorker.IsBusy)
             return;
 
@@ -178,6 +177,11 @@ public partial class NetworkSniffer : Form
     {
         IPcomboBox.Items.Clear();
         IPcomboBox.Items.AddRange(IPHelper.GetIPAddresses(AddressFamily.InterNetwork).ToArray());
+    }
+
+    private void GetLocalNetworkParameters()
+    {
+        var info = IPHelper.GetNetworkParameters();
     }
 
     private void RefreshControls(object sender, EventArgs e)

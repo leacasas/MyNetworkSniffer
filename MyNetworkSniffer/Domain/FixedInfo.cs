@@ -1,4 +1,5 @@
-﻿using System.Runtime.InteropServices;
+﻿using System.Net.NetworkInformation;
+using System.Runtime.InteropServices;
 
 namespace MyNetworkSniffer.Domain;
 
@@ -11,7 +12,7 @@ public struct FixedInfo
     public string DomainName;
     public IntPtr CurrentDnsServer;
     public IPAddress DnsServerList;
-    public uint NodeType;
+    public NetBiosNodeType NodeType;
     [MarshalAs(UnmanagedType.ByValTStr, SizeConst = IPHelperConstants.MAX_HOSTNAME_LEN + 4)]
     public string ScopeId;
     public uint EnableRouting;
