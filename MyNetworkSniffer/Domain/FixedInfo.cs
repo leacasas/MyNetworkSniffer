@@ -3,18 +3,18 @@
 namespace MyNetworkSniffer.Domain;
 
 [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
-internal struct FixedInfo
+public struct FixedInfo
 {
     [MarshalAs(UnmanagedType.ByValTStr, SizeConst = IPHelperConstants.MAX_HOSTNAME_LEN + 4)]
-    internal string HostName;
+    public string HostName;
     [MarshalAs(UnmanagedType.ByValTStr, SizeConst = IPHelperConstants.MAX_HOSTNAME_LEN + 4)]
-    internal string DomainName;
-    internal IntPtr CurrentDnsServer;
-    internal IPAddress DnsServerList;
-    internal uint NodeType;
+    public string DomainName;
+    public IntPtr CurrentDnsServer;
+    public IPAddress DnsServerList;
+    public uint NodeType;
     [MarshalAs(UnmanagedType.ByValTStr, SizeConst = IPHelperConstants.MAX_HOSTNAME_LEN + 4)]
-    internal string ScopeId;
-    internal uint EnableRouting;
-    internal uint EnableProxy;
-    internal uint EnableDns;
+    public string ScopeId;
+    public uint EnableRouting;
+    public uint EnableProxy;
+    public uint EnableDns;
 }

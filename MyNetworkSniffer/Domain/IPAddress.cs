@@ -3,17 +3,17 @@
 namespace MyNetworkSniffer.Domain;
 
 [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
-internal struct IPAddress
+public struct IPAddress
 {
-    internal IntPtr Next;
-    internal IPAddressString IpAddress;
-    internal IPAddressString IpMask;
-    internal uint Context;
+    public IntPtr Next;
+    public IPAddressString IpAddress;
+    public IPAddressString IpMask;
+    public uint Context;
 }
 
 [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
-internal struct IPAddressString
+public struct IPAddressString
 {
     [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 16)]
-    internal string String;
+    public string String;
 }

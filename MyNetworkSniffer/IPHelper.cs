@@ -277,7 +277,7 @@ public static class IPHelper
         return "not detected";
     }
 
-    public static string GetNetworkParameters()
+    public static FixedInfo GetNetworkParameters()
     {
         IntPtr infoPtr = IntPtr.Zero;
 
@@ -301,12 +301,14 @@ public static class IPHelper
             if (ret == 0)
                 break;
 
-            throw new ApplicationException("An error occurred while fetching adapter information.", new Win32Exception(Convert.ToInt32(ret)));
+            //returned ERROR_INVALID_PARAMETER, ERROR_NO_DATA or ERROR_NOT_SUPPORTED
+            Marshal.FreeHGlobal(infoPtr);
+            throw new ApplicationException("An error occurred while fetching adapter information.", new Win32Exception(ret));
         }
 
-        FixedInfo info = (FixedInfo)Marshal.PtrToStructure(infoPtr, typeof(FixedInfo));
-
-        return info.ToString();//implement to string
+#pragma warning disable CS8605 // Unboxing a possibly null value (FixedInfo has been returned above).
+        return (FixedInfo)Marshal.PtrToStructure(infoPtr, typeof(FixedInfo));
+#pragma warning restore CS8605
     }
 
     [DllImport("iphlpapi.dll", ExactSpelling = true)]
