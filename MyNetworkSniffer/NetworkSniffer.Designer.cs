@@ -568,7 +568,7 @@ partial class NetworkSniffer
             this.ParametersGroupBox.Controls.Add(this.HostNameTextBox);
             this.ParametersGroupBox.Location = new System.Drawing.Point(783, 5);
             this.ParametersGroupBox.Name = "ParametersGroupBox";
-            this.ParametersGroupBox.Size = new System.Drawing.Size(668, 372);
+            this.ParametersGroupBox.Size = new System.Drawing.Size(668, 188);
             this.ParametersGroupBox.TabIndex = 30;
             this.ParametersGroupBox.TabStop = false;
             this.ParametersGroupBox.Text = "Local Network Parameters";

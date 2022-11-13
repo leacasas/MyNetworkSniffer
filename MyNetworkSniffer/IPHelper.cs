@@ -1,14 +1,11 @@
 ﻿using MyNetworkSniffer.Domain;
-using System.ComponentModel;
 using System.Net;
-using System.Net.NetworkInformation;
 using System.Net.Sockets;
-using System.Runtime.InteropServices;
 using System.Text;
 
 namespace MyNetworkSniffer;
 
-public static class IPHelper
+public static partial class IPHelper
 {
     public static IPClass GetIPClass(string ip)
     {
@@ -248,72 +245,4 @@ public static class IPHelper
             .Where(ip => ip.AddressFamily == family)
             .Select(ip => ip.ToString());
     }
-
-    public static string GetMACAddress(string ipAddress)
-    {
-        if (!ValidateIP(ipAddress))
-            return "invalid IP provided";
-
-        System.Net.IPAddress address = System.Net.IPAddress.Parse(ipAddress);
-
-        try
-        {
-            byte[] MACByte = new byte[6];
-
-            int MACLength = MACByte.Length;
-
-            _ = SendARP((int)address.Address, 0, MACByte, ref MACLength);
-
-            string MACSSTR = BitConverter.ToString(MACByte, 0, 6);
-
-            if (MACSSTR != "00-00-00-00-00-00")
-                return PhysicalAddress.Parse(MACSSTR).ToString();
-        }
-        catch (Exception ex)
-        {
-            return "not detected";
-        }
-
-        return "not detected";
-    }
-
-    public static FixedInfo GetNetworkParameters()
-    {
-        IntPtr infoPtr = IntPtr.Zero;
-
-        int infoLen = Marshal.SizeOf(typeof(FixedInfo));
-
-        int ret;
-
-        while (true)
-        {
-            infoPtr = Marshal.AllocHGlobal(Convert.ToInt32(infoLen));
-
-            ret = GetNetworkParams(infoPtr, ref infoLen);
-
-            if (ret == 111) //ERROR_BUFFER_OVERFLOW
-            {
-                //try again w/ bigger buffer:
-                Marshal.FreeHGlobal(infoPtr);
-                continue;
-            }
-
-            if (ret == 0)
-                break;
-
-            //returned ERROR_INVALID_PARAMETER, ERROR_NO_DATA or ERROR_NOT_SUPPORTED
-            Marshal.FreeHGlobal(infoPtr);
-            throw new ApplicationException("An error occurred while fetching adapter information.", new Win32Exception(ret));
-        }
-
-#pragma warning disable CS8605 // Unboxing a possibly null value (FixedInfo has been returned above).
-        return (FixedInfo)Marshal.PtrToStructure(infoPtr, typeof(FixedInfo));
-#pragma warning restore CS8605
-    }
-
-    [DllImport("iphlpapi.dll", ExactSpelling = true)]
-    private static extern int SendARP(int DestIP, int SrcIP, [Out] byte[] MacAddr, ref int MacLen);
-
-    [DllImport("iphlpapi.dll", ExactSpelling = true, CharSet = CharSet.Ansi)]
-    private static extern int GetNetworkParams(IntPtr pFixedInfo, ref int pBufOutLen);
 }

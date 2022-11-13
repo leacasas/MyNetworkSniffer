@@ -1,5 +1,4 @@
-﻿using System;
-using System.Runtime.InteropServices;
+﻿using System.Runtime.InteropServices;
 
 namespace MyNetworkSniffer.Domain;
 
@@ -18,4 +17,15 @@ public struct IPAddressString
 {
     [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 16)]
     public string String;
+}
+
+[StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
+public struct LinkedIPAddressString
+{
+    public IntPtr Next;
+
+    [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 16)]
+    public string String;
+
+    public LinkedIPAddressString? GetNext() => Next == IntPtr.Zero ? null : (LinkedIPAddressString)Marshal.PtrToStructure(Next, typeof(LinkedIPAddressString));
 }

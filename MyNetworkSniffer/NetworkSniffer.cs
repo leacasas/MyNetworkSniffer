@@ -33,6 +33,8 @@ public partial class NetworkSniffer : Form
         InitializeComponent();
         GetLocalIPAddress();
         GetLocalNetworkParameters();
+
+
     }
 
     #region UI events
@@ -154,6 +156,8 @@ public partial class NetworkSniffer : Form
 
     private void StartButton_Click(object sender, EventArgs e)
     {
+        var adapterInfo = IPHelper.GetInfoOfAdapters();
+
         if (string.IsNullOrWhiteSpace(IP))
         {
             MessageBox.Show("Please select or choose an IP address");
