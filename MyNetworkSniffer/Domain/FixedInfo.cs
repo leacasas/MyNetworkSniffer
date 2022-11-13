@@ -25,7 +25,9 @@ public struct FixedInfo
         {
             if (DnsServerList.IpAddress.String != null)
                 yield return DnsServerList;
+
             var next = DnsServerList.GetNext();
+
             while (next != null)
             {
                 yield return next.Value;

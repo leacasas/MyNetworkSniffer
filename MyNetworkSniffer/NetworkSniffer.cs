@@ -2,6 +2,7 @@ using MyNetworkSniffer.Domain;
 using System.ComponentModel;
 using System.Net.Sockets;
 using System.Text;
+using System.Linq;
 
 namespace MyNetworkSniffer;
 
@@ -138,7 +139,7 @@ public partial class NetworkSniffer : Form
 
                         _pingedCount = 0;
 
-                        SafeInvoke(LogTextBox, () => LogTextBox.AppendText("-Pinged all detected devices-"));
+                        SafeInvoke(LogTextBox, () => LogTextBox.AppendText("-Pinged all detected devices-" + Environment.NewLine));
 
                         break;
                     }
@@ -181,7 +182,15 @@ public partial class NetworkSniffer : Form
 
     private void GetLocalNetworkParameters()
     {
-        var info = IPHelper.GetNetworkParameters();
+        FixedInfo networkParameters = IPHelper.GetNetworkParameters();
+
+        HostNameTextBox.Text = networkParameters.HostName;
+        NodeTypeTextBox.Text = networkParameters.NodeType.ToString();
+        DomainNameTextBox.Text = networkParameters.DomainName;
+        ScopeNameTextBox.Text = networkParameters.ScopeId;
+
+        DNSServersListView.Items.Clear();
+        DNSServersListView.Items.AddRange(networkParameters.DnsServers.Select(x => new ListViewItem(x.IpAddress.String.ToString())).ToArray());
     }
 
     private void RefreshControls(object sender, EventArgs e)
