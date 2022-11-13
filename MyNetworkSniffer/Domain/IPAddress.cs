@@ -1,4 +1,5 @@
-﻿using System.Runtime.InteropServices;
+﻿using System;
+using System.Runtime.InteropServices;
 
 namespace MyNetworkSniffer.Domain;
 
@@ -9,6 +10,7 @@ public struct IPAddress
     public IPAddressString IpAddress;
     public IPAddressString IpMask;
     public uint Context;
+    public IPAddress? GetNext() => Next == IntPtr.Zero ? null : (IPAddress)Marshal.PtrToStructure(Next, typeof(IPAddress));
 }
 
 [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
