@@ -20,25 +20,25 @@ public struct IPAdapterInfo
     [MarshalAs(UnmanagedType.Bool)]
     public bool DhcpEnabled;
     public IntPtr CurrentIpAddress;
-    public LinkedIPAddressString IpAddressList;
-    public LinkedIPAddressString GatewayList;
-    public LinkedIPAddressString DhcpServer;
+    public IPAddress IpAddressList;
+    public IPAddress GatewayList;
+    public IPAddress DhcpServer;
     [MarshalAs(UnmanagedType.Bool)]
     public bool HaveWins;
-    public LinkedIPAddressString PrimaryWinsServer;
-    public LinkedIPAddressString SecondaryWinsServer;
+    public IPAddress PrimaryWinsServer;
+    public IPAddress SecondaryWinsServer;
     public long LeaseObtained;
     public long LeaseExpires;
 
-    public IEnumerable<LinkedIPAddressString> IpAddresses => HelperExtensions.ReturnLinkedList(IpAddressList).Where(x => !string.IsNullOrWhiteSpace(x.String));
+    public IEnumerable<IPAddress> IpAddresses => HelperExtensions.ReturnLinkedList(IpAddressList).Where(x => !string.IsNullOrWhiteSpace(x.IpAddress.String));
 
-    public IEnumerable<LinkedIPAddressString> Gateways => HelperExtensions.ReturnLinkedList(GatewayList).Where(x => !string.IsNullOrWhiteSpace(x.String));
+    public IEnumerable<IPAddress> Gateways => HelperExtensions.ReturnLinkedList(GatewayList).Where(x => !string.IsNullOrWhiteSpace(x.IpAddress.String));
 
-    public IEnumerable<LinkedIPAddressString> DhcpServers => HelperExtensions.ReturnLinkedList(DhcpServer).Where(x => !string.IsNullOrWhiteSpace(x.String));
+    public IEnumerable<IPAddress> DhcpServers => HelperExtensions.ReturnLinkedList(DhcpServer).Where(x => !string.IsNullOrWhiteSpace(x.IpAddress.String));
 
-    public IEnumerable<LinkedIPAddressString> PrimaryWinsServers => HelperExtensions.ReturnLinkedList(PrimaryWinsServer).Where(x => !string.IsNullOrWhiteSpace(x.String));
+    public IEnumerable<IPAddress> PrimaryWinsServers => HelperExtensions.ReturnLinkedList(PrimaryWinsServer).Where(x => !string.IsNullOrWhiteSpace(x.IpAddress.String));
 
-    public IEnumerable<LinkedIPAddressString> SecondaryWinsServers => HelperExtensions.ReturnLinkedList(SecondaryWinsServer).Where(x => !string.IsNullOrWhiteSpace(x.String));
+    public IEnumerable<IPAddress> SecondaryWinsServers => HelperExtensions.ReturnLinkedList(SecondaryWinsServer).Where(x => !string.IsNullOrWhiteSpace(x.IpAddress.String));
 
     public IPAdapterInfo? GetNext() => Next == IntPtr.Zero ? null : (IPAdapterInfo)Marshal.PtrToStructure(Next, typeof(IPAdapterInfo));
 }

@@ -4,9 +4,9 @@ namespace MyNetworkSniffer.Utilities;
 
 public static class HelperExtensions
 {
-    public static IEnumerable<LinkedIPAddressString> ReturnLinkedList(this LinkedIPAddressString addressList)
+    public static IEnumerable<IPAddress> ReturnLinkedList(this IPAddress addressList)
     {
-        if (addressList.String != null)
+        if (addressList.IpAddress.String != null)
             yield return addressList;
 
         var next = addressList.GetNext();
