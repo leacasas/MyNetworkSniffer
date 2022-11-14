@@ -1,5 +1,4 @@
 ﻿using MyNetworkSniffer.Domain;
-using System;
 using System.ComponentModel;
 using System.Net.NetworkInformation;
 using System.Runtime.InteropServices;

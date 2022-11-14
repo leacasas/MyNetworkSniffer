@@ -1,4 +1,5 @@
-﻿using System.Net.NetworkInformation;
+﻿using MyNetworkSniffer.Utilities;
+using System.Net.NetworkInformation;
 using System.Runtime.InteropServices;
 
 namespace MyNetworkSniffer.Domain;
@@ -19,20 +20,5 @@ public struct FixedInfo
     public uint EnableProxy;
     public uint EnableDns;
 
-    public IEnumerable<IPAddress> DnsServers
-    {
-        get
-        {
-            if (DnsServerList.IpAddress.String != null)
-                yield return DnsServerList;
-
-            var next = DnsServerList.GetNext();
-
-            while (next != null)
-            {
-                yield return next.Value;
-                next = next.Value.GetNext();
-            }
-        }
-    }
+    public IEnumerable<IPAddress> DnsServers => HelperExtensions.ReturnLinkedList(DnsServerList).Where(x => !string.IsNullOrWhiteSpace(x.IpAddress.String));
 }

@@ -33,8 +33,6 @@ public partial class NetworkSniffer : Form
         InitializeComponent();
         GetLocalIPAddress();
         GetLocalNetworkParameters();
-
-
     }
 
     #region UI events
