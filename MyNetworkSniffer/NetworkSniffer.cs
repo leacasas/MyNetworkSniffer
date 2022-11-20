@@ -4,6 +4,7 @@ using System.Net.Sockets;
 using System.Text;
 using System.Linq;
 using System.Diagnostics;
+using System.Collections.Generic;
 
 namespace MyNetworkSniffer;
 
@@ -33,6 +34,7 @@ public partial class NetworkSniffer : Form
         InitializeComponent();
         GetLocalIPAddress();
         GetLocalNetworkParameters();
+        GetAdapters();
     }
 
     #region UI events
@@ -154,8 +156,6 @@ public partial class NetworkSniffer : Form
 
     private void StartButton_Click(object sender, EventArgs e)
     {
-        var adapterInfo = IPHelper.GetInfoOfAdapters();
-
         if (string.IsNullOrWhiteSpace(IP))
         {
             MessageBox.Show("Please select or choose an IP address");
@@ -192,6 +192,18 @@ public partial class NetworkSniffer : Form
     #endregion
 
     #region Private Methods
+
+    private void GetAdapters()
+    {
+        AdaptersListView.Items.Clear();
+
+        var adapterInfo = IPHelper.GetInfoOfAdapters();
+
+        foreach (var adapter in adapterInfo)
+        {
+            AdaptersListView.Items.Add($"{adapter.AdapterDescription}({adapter.Type}) | IP: {adapter.IpAddressList.IpAddress.String} | DCHP: {adapter.DhcpServer.IpAddress.String} | Gateway: {adapter.GatewayList.IpAddress.String}");
+        }
+    }
 
     private void GetLocalIPAddress()
     {

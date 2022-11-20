@@ -86,6 +86,8 @@ partial class NetworkSniffer
             this.NodeTypeTextBox = new System.Windows.Forms.TextBox();
             this.HostNameLabel = new System.Windows.Forms.Label();
             this.HostNameTextBox = new System.Windows.Forms.TextBox();
+            this.AdaptersListView = new System.Windows.Forms.ListView();
+            this.AdaptersGroupBox = new System.Windows.Forms.GroupBox();
             ((System.ComponentModel.ISupportInitialize)(this.MaskBitsTrackBar)).BeginInit();
             this.NetworkGroupBox.SuspendLayout();
             this.ProcessGroupBox.SuspendLayout();
@@ -582,7 +584,7 @@ partial class NetworkSniffer
             this.DNSServersListView.MultiSelect = false;
             this.DNSServersListView.Name = "DNSServersListView";
             this.DNSServersListView.ShowGroups = false;
-            this.DNSServersListView.Size = new System.Drawing.Size(300, 110);
+            this.DNSServersListView.Size = new System.Drawing.Size(315, 110);
             this.DNSServersListView.TabIndex = 9;
             this.DNSServersListView.UseCompatibleStateImageBehavior = false;
             this.DNSServersListView.View = System.Windows.Forms.View.List;
@@ -676,11 +678,34 @@ partial class NetworkSniffer
             this.HostNameTextBox.Size = new System.Drawing.Size(192, 27);
             this.HostNameTextBox.TabIndex = 0;
             // 
+            // AdaptersListView
+            // 
+            this.AdaptersListView.Font = new System.Drawing.Font("Segoe UI", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.AdaptersListView.Location = new System.Drawing.Point(798, 226);
+            this.AdaptersListView.MultiSelect = false;
+            this.AdaptersListView.Name = "AdaptersListView";
+            this.AdaptersListView.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.AdaptersListView.ShowGroups = false;
+            this.AdaptersListView.Size = new System.Drawing.Size(636, 133);
+            this.AdaptersListView.TabIndex = 31;
+            this.AdaptersListView.UseCompatibleStateImageBehavior = false;
+            this.AdaptersListView.View = System.Windows.Forms.View.List;
+            // 
+            // AdaptersGroupBox
+            // 
+            this.AdaptersGroupBox.Location = new System.Drawing.Point(783, 204);
+            this.AdaptersGroupBox.Name = "AdaptersGroupBox";
+            this.AdaptersGroupBox.Size = new System.Drawing.Size(668, 173);
+            this.AdaptersGroupBox.TabIndex = 32;
+            this.AdaptersGroupBox.TabStop = false;
+            this.AdaptersGroupBox.Text = "Adapters";
+            // 
             // NetworkSniffer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1463, 804);
+            this.Controls.Add(this.AdaptersListView);
             this.Controls.Add(this.ParametersGroupBox);
             this.Controls.Add(this.LogGroupBox);
             this.Controls.Add(this.ProcessGroupBox);
@@ -710,6 +735,7 @@ partial class NetworkSniffer
             this.Controls.Add(this.MaskBitsTrackBar);
             this.Controls.Add(this.IPcomboBox);
             this.Controls.Add(this.NetworkGroupBox);
+            this.Controls.Add(this.AdaptersGroupBox);
             this.Name = "NetworkSniffer";
             this.Text = "NetworkSniffer";
             ((System.ComponentModel.ISupportInitialize)(this.MaskBitsTrackBar)).EndInit();
@@ -784,4 +810,6 @@ partial class NetworkSniffer
     private ListView DNSServersListView;
     private Label EnableVerboseLlabel;
     private Button EnableVerboseButton;
+    private ListView AdaptersListView;
+    private GroupBox AdaptersGroupBox;
 }
